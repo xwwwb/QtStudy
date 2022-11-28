@@ -12,6 +12,7 @@ public:
   // 信号只是函数的声明 没有实现 也不能实现 Qt框架会在预编译的时候帮我们实现
 signals:
   void hungry();
+  void hungry_arg(QString name, int money);
 };
 
 class OneSelf : public QObject {
@@ -22,6 +23,7 @@ public:
   // 自定义槽 写在slots下 需要调用
 public slots:
   void onHungry();
+  void onHungry_arg(QString name, int money);
 };
 
 class Widget : public QWidget {
@@ -36,6 +38,7 @@ private:
   OneSelf *self;
 public slots:
   void onHunBtnClicked();
+  void ontextChanged(const QString &text);
 };
 
 #endif // WIDGET_H
