@@ -14,7 +14,7 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(OverloadSignalAndSlots main.cpp)
+add_executable(OverloadSignalAndSlots main.cpp widget.h widget.cpp MyPushButton.cpp MyPushButton.h)
 target_link_libraries(OverloadSignalAndSlots
         Qt::Core
         Qt::Gui
