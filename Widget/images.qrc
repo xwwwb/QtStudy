@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/ ">
+        <file>images/zay.png</file>
+        <file>images/zay.ico</file>
+        <file>images/snowBall.png</file>
+        <file>images/cursor_twoBig.png</file>
+        <file>images/cursor_two.png</file>
+        <file>images/cursor_one.png</file>
+    </qresource>
+</RCC>
