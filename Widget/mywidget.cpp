@@ -201,4 +201,17 @@ void MyWidget::setFlags() {
    *    0 0000
    *
    */
+
+  // 为了恢复和激活最小化窗口 同时保持其最大化和全屏状态 使用以下方法 一脸懵逼
+  w->setWindowState((w->windowState() & ~Qt::WindowMinimized) |
+                    Qt::WindowActive);
+
+  w->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
+  connect(w, &QObject::destroyed, this, []() {
+    qDebug() << "这个窗口关闭的时候会销毁，而别的窗口只有在全部窗口都关闭的时候"
+                "才会销毁 因为设置了窗口属性";
+  });
+
+  this->setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
+  this->setAttribute(Qt::WA_TranslucentBackground); // 设置透明窗口
 }
