@@ -7,13 +7,16 @@
 
 #include <QWidget>
 #include <QPushButton>
-
+#include <QToolButton>
+#include <QLabel>
 class Widget :public QWidget{
     Q_OBJECT
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
     void createPushButton();
+    void createToolButton();
+    void createQLabel();
 
 };
 

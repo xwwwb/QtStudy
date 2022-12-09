@@ -5,11 +5,13 @@
 #include "Widget.h"
 #include <QDebug>
 #include <QMenu>
-
+#include <QMovie>
 Widget::Widget(QWidget *parent) : QWidget(parent) {
     setWindowTitle("学习常见控件");
     resize(640, 480);
     createPushButton();
+    createToolButton();
+    createQLabel();
 }
 
 void Widget::createPushButton() {
@@ -35,8 +37,8 @@ void Widget::createPushButton() {
     // 设置大小
     btn->resize(64, 64);
 
-    // 设置按钮图标 不起作用？
-    btn->setIcon(QIcon("./user.png"));
+    // 设置按钮图标 图片路径要基于可执行文件的路径
+    btn->setIcon(QIcon("../user.png"));
     // 设置图标大小
     btn->setIconSize(QSize(32, 32));
 
@@ -78,10 +80,9 @@ void Widget::createPushButton() {
     connect(menu2Act, &QAction::triggered, this, [=]() {
         qDebug() << "菜单2被点击";
     });
-    connect(menu3Act,&QAction::toggled, this, [=](bool checked) {
+    connect(menu3Act, &QAction::toggled, this, [=](bool checked) {
         qDebug() << "菜单3" << checked;
     });
-
 
 
     auto *btn5 = new QPushButton("菜单按钮", this);
@@ -89,9 +90,66 @@ void Widget::createPushButton() {
     btn5->setMenu(menu);
 
     // menu自己的信号也可以用
-    connect(menu,&QMenu::triggered,this,[=](QAction *item){
+    connect(menu, &QMenu::triggered, this, [=](QAction *item) {
         btn5->setText(item->text());
     });
 }
+
+void Widget::createToolButton() {
+    // 默认无文字
+    QToolButton *toolBtn = new QToolButton(this);
+    toolBtn->move(200, 200);
+// 这里的路径要填相对于运行文件的路径
+    toolBtn->setIcon(QIcon("../user.png"));
+    toolBtn->setMinimumSize(200, 200);
+    toolBtn->setIconSize(QSize(64, 64));
+
+    // 设置箭头
+    // 覆盖掉了上面设置的图标
+    toolBtn->setArrowType(Qt::RightArrow);
+
+    // 设置toolButton样式
+    toolBtn->setText("ToolButton");
+    // 貌似setIconSize就失效了
+    toolBtn->setToolButtonStyle(Qt::ToolButtonStyle::ToolButtonTextUnderIcon);
+}
+
+void Widget::createQLabel(){
+    QLabel  *label = new QLabel("Label",this);
+    label->move(120 ,300);
+    label->setStyleSheet("background-color:green");
+    label->setAlignment(Qt::AlignCenter);
+
+    // 设置图片标签
+    QLabel *label2 = new QLabel(this);
+    label2->move(120, 400);
+    label2->setPixmap(QPixmap("../user.png").scaled(64,64));
+
+    // 内容自动缩放
+    QLabel *label3 = new QLabel(this);
+    label3->move(500, 200);
+    label3->setPixmap(QPixmap("../user.png"));
+    label3->setScaledContents(true);
+    label3->setFixedSize(64,64);
+
+    // 显示GIF
+    QLabel *label4 = new QLabel(this);
+    label4->move(500, 300);
+    label4->setScaledContents(true);
+    QMovie *movie = new QMovie("../giphy.gif");
+    movie->setScaledSize(QSize(64,64));
+    label4->setMovie(movie);
+    movie->start();
+
+    // 超链接
+    QLabel *label5 = new QLabel(this);
+    label5->move(500,200);
+    label5->setText("<a href=\"https://www.google.com\">点我</a>");
+    connect(label5,&QLabel::linkActivated,this,[=](QString link){
+        qDebug() << "超链接被点击" << link;
+    });
+    label5->setOpenExternalLinks(true);
+}
+
 
 Widget::~Widget() = default;
